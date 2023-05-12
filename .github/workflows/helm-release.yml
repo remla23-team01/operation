@@ -25,5 +25,6 @@ jobs:
           # Get packed chart file name
           PKG_NAME=`ls *.tgz`
           echo $PKG_NAME
+          echo $REPO
           # pushing to registry
           helm push ${PKG_NAME} ${REPO}/charts
