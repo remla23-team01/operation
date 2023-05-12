@@ -19,7 +19,7 @@ jobs:
           
       - name: Pushing Helm Chart
         run: |
-          REPO=oci://ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')/operation
+          REPO=oci://ghcr.io/$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           # create chart package for chart `sentimentchart`
           helm package sentimentchart
           # Get packed chart file name
