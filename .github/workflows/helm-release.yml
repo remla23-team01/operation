@@ -13,8 +13,7 @@ jobs:
 
       - name: Login to registry
         run: |
-          REPO_OWNER=`echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]'`
-          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
           
       - name: Pushing Helm Chart
         run: |
