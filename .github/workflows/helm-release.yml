@@ -27,4 +27,4 @@ jobs:
           echo $PKG_NAME
           echo $REPO
           # pushing to registry
-          helm push ${PKG_NAME} ${REPO}
+          helm push ${PKG_NAME} ${REPO}/charts
