@@ -1,0 +1,27 @@
+name: Helm Release
+on:
+  push:
+    branches:
+      - migration-kubernetes
+jobs:
+  release-helm-chart:
+    name: Release Helm Chart
+    timeout-minutes: 90
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to registry
+        run: |
+          REPO_OWNER=`echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]'`
+          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          
+      - name: Pushing Helm Chart
+        run: |
+          REPO=oci://ghcr.io/$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          # create chart package for chart `sentimentchart`
+          helm package sentimentchart
+          # Get packed chart file name
+          PKG_NAME=`ls *.tgz`
+          # pushing to registry
+          helm push ${PKG_NAME} ${REPO}/charts
