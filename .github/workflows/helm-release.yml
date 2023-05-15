@@ -17,8 +17,8 @@ jobs:
 
       - name: Pushing Helm Chart
         run: |
-          REPO=oci://ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
-          # create chart package for chart `my-app`
+          REPO=oci://ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/charts
+          # create chart package for chart "sentimentchart"
           helm package sentimentchart
           # Get packed chart file name
           PKG_NAME=`ls *.tgz`
