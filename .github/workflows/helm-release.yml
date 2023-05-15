@@ -13,7 +13,7 @@ jobs:
       - name: Chart | Push
         uses: appany/helm-oci-chart-releaser@v0.3.0
         with:
-          name: sentiment-chart
+          name: sentimentchart
           repository: operation
           tag: 0.1.0
           path: sentimentchart # Default charts/{name}
