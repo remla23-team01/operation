@@ -22,5 +22,6 @@ jobs:
           helm package sentimentchart
           # Get packed chart file name
           PKG_NAME=`ls *.tgz`
+          helm repo index ./
           # pushing `my-app-1.0.0.tgz` to registry
           helm push ${PKG_NAME} $REPO
