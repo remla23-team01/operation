@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - main
-
+env:
+  HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
 jobs:
   release-helm-chart:
     name: Release Helm Chart
@@ -22,6 +23,6 @@ jobs:
           helm package sentimentchart
           # Get packed chart file name
           PKG_NAME=`ls *.tgz`
-          helm repo index ./
+          helm repo index --url $REPO --merge index.yaml .
           # pushing `my-app-1.0.0.tgz` to registry
           helm push ${PKG_NAME} $REPO
