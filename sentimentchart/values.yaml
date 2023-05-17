@@ -1,7 +1,7 @@
 modelService:
   version: latest
   port: "8080"
-  replicas: 3
+  replicas: 1
   link: "http://localhost"
 app:
   version: latest
