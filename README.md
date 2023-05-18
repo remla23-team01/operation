@@ -1,6 +1,22 @@
 # Opperation repo for the Remla project
 Here you can find the files for starting the project using helm and kubernetes. It is also possible to use docker-compose using the docker-compose.yml
 
+## Start up using k8s
+First start a kubernetes cluster using `minikube start`
+
+Add all services to the running cluster by using the command:
+```
+kubectl apply -f .\operations.yml
+```
+Expose the port of prometheus and grafana by using the following commands:
+```
+minikube service myprom-kube-prometheus-sta-prometheus --url
+```
+```
+minikube service myprom-grafana --url
+```
+After setting up a tunnel using `minikube tunnel` you should be able to acces the webservice at http://localhost 
+A template grafana dashboard can be imported with the json file: `/grafana/RestaurantSentiment.json`. 
 
 ## Start up using helm
 First make sure you have a kubernetes cluster running using `minikube start` and enabled the ingress addon using `minikube addons enable ingress`
