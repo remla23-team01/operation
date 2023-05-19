@@ -1,70 +1,70 @@
-apiVersion: apps/v1
-kind: Deployment
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: model-service-depl
+#   labels:
+#     app: model-service
+# spec:
+#   replicas: {{.Values.modelService.replicas}}
+#   selector:
+#     matchLabels:
+#       app: model-service
+#   template:
+#     metadata:
+#       labels:
+#         app: model-service
+#     spec:
+#       containers:
+#       - name: model-service
+#         image: ghcr.io/remla23-team01/model-service:{{.Values.modelService.version}}
+#         imagePullPolicy: Always
+#         ports:
+#         - containerPort: 8080
+#         env:
+#           - name: MODEL_HOST_LINK
+#             valueFrom:
+#               configMapKeyRef:
+#                 name: my-config
+#                 key: MODEL_HOST_LINK
+#           - name: MODEL_HOST_PORT
+#             valueFrom:
+#               configMapKeyRef:
+#                 name: my-config
+#                 key: MODEL_HOST_PORT
+#         volumeMounts:
+#         - name: config
+#           mountPath: "/root/config"
+#           readOnly: true
+#       volumes:
+#       - name: config
+#         configMap:
+#           name: my-config
+#           items:
+#           - key: MODEL_HOST_LINK
+#             path: MODEL_HOST_LINK
+apiVersion: v1
+kind: Pod
 metadata:
-  name: model-service-depl
+  name: model-service
   labels:
     app: model-service
 spec:
-  replicas: {{.Values.modelService.replicas}}
-  selector:
-    matchLabels:
-      app: model-service
-  template:
-    metadata:
-      labels:
-        app: model-service
-    spec:
-      containers:
-      - name: model-service
-        image: ghcr.io/remla23-team01/model-service:{{.Values.modelService.version}}
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        env:
-          - name: MODEL_HOST_LINK
-            valueFrom:
-              configMapKeyRef:
-                name: my-config
-                key: MODEL_HOST_LINK
-          - name: MODEL_HOST_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: my-config
-                key: MODEL_HOST_PORT
-        volumeMounts:
-        - name: config
-          mountPath: "/root/config"
-          readOnly: true
-      volumes:
-      - name: config
-        configMap:
-          name: my-config
-          items:
-          - key: MODEL_HOST_LINK
-            path: MODEL_HOST_LINK
-
+  containers:
+  - name: model-service
+    image: ghcr.io/remla23-team01/model-service:latest
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: model-service-serv
+  labels:
+    app: model-service
 spec:
   selector:
     app: model-service
   ports:
     - port: 8080
-      protocol: "TCP"
       targetPort: 8080
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: mymonitor
-  labels:
-    release: myprom
-spec:
-  selector:
-    matchLabels:
-      app: model-service-serv
-  endpoints:
-  - interval: 1s

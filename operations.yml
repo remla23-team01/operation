@@ -19,7 +19,6 @@ metadata:
   labels:
     app: model-service-serv
 spec:
-  type: NodePort
   selector:
     app: model-service
   ports:
@@ -65,11 +64,41 @@ kind: Ingress
 metadata:
   name: my-ingress
 spec:
-  defaultBackend:
-    service:
-      name: app-serv
-      port:
-        number: 8081
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-serv
+            port:
+              number: 8081
+      - path: /metrics
+        pathType: Prefix
+        backend:
+          service:
+            name: app-serv
+            port:
+              number: 8081
+      - path: /predict
+        pathType: Prefix
+        backend:
+          service:
+            name: app-serv
+            port:
+              number: 8081
+  - host: grafana.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: myprom-grafana
+            port:
+              number: 80
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
