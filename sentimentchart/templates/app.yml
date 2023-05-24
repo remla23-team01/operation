@@ -1,25 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-depl
-  labels:
-    app: app
+  name: app-depl-v1
+  labels: { app: app, version: v1 }
 spec:
   replicas: {{.Values.app.replicas}}
   selector:
-    matchLabels:
-      app: app
+    matchLabels: { app: app, version: v1 }
   template:
     metadata:
-      labels:
-        app: app
+      labels: { app: app, version: v1 }
     spec:
       containers:
-      - name: app
-        image: ghcr.io/remla23-team01/app:{{.Values.app.version}}
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
+        - name: app
+          # This is the white version of the app
+          image: ghcr.io/remla23-team01/app:0.0.23
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-depl-v2
+  labels: { app: app, version: v2 }
+spec:
+  replicas: {{.Values.app.replicas}}
+  selector:
+    matchLabels: { app: app, version: v2 }
+  template:
+    metadata:
+      labels: { app: app, version: v2 }
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/remla23-team01/app:{{.Values.app.version}}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
