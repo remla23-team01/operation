@@ -4,37 +4,37 @@ metadata:
   name: my-ingress
 spec:
   rules:
-  - host: localhost
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: app-serv
-            port:
-              number: 8081
-      - path: /metrics
-        pathType: Prefix
-        backend:
-          service:
-            name: app-serv
-            port:
-              number: 8081
-      - path: /predict
-        pathType: Prefix
-        backend:
-          service:
-            name: app-serv
-            port:
-              number: 8081
-  - host: grafana.localhost
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: myprom-grafana
-            port:
-              number: 80
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-serv
+                port:
+                  number: 8081
+          - path: /metrics
+            pathType: Prefix
+            backend:
+              service:
+                name: app-serv
+                port:
+                  number: 8081
+          - path: /predict
+            pathType: Prefix
+            backend:
+              service:
+                name: app-serv
+                port:
+                  number: 8081
+    - host: grafana.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: myprom-grafana
+                port:
+                  number: 80

@@ -50,11 +50,11 @@ metadata:
     app: model-service
 spec:
   containers:
-  - name: model-service
-    image: ghcr.io/remla23-team01/model-service:latest
-    imagePullPolicy: Always
-    ports:
-    - containerPort: 8080
+    - name: model-service
+      image: ghcr.io/remla23-team01/model-service:latest
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
