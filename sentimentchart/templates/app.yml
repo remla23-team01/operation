@@ -10,6 +10,9 @@ spec:
   template:
     metadata:
       labels: { app: app, version: v1 }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
     spec:
       containers:
         - name: app
@@ -18,6 +21,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,6 +35,9 @@ spec:
   template:
     metadata:
       labels: { app: app, version: v2 }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
     spec:
       containers:
         - name: app
