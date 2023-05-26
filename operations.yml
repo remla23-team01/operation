@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: model-service
-    image: ghcr.io/remla23-team01/model-service:latest
+    image: ghcr.io/remla23-team01/model-service:0.0.26
     imagePullPolicy: Always
     ports:
     - containerPort: 8080
@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: ghcr.io/remla23-team01/app:latest
+        image: ghcr.io/remla23-team01/app:0.0.26
         imagePullPolicy: Always
         ports:
         - containerPort: 80
