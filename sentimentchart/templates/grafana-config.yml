@@ -4,7 +4,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
   name: grafana-sentiment-dashboard
-  namespace: default
+  namespace: istio-system
 data:
   RestaurantSentimentDashboard.json: |-
     {

@@ -17,7 +17,7 @@ spec:
       containers:
         - name: app
           # This is the white version of the app
-          image: ghcr.io/remla23-team01/app:0.0.23
+          image: ghcr.io/remla23-team01/app:0.0.26
           imagePullPolicy: Always
           ports:
             - containerPort: 80
