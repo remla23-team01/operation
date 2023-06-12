@@ -10,10 +10,6 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /predict
-        - uri:
-            prefix: /metrics
-        - uri:
             prefix: /
       route:
         - destination:
@@ -24,3 +20,20 @@ spec:
             host: app-serv
             subset: v2
           weight: 50
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: model-service
+spec:
+  hosts:
+    - model-service-serv
+  http:
+  - route:
+    - destination:
+        host: model-service-serv
+        subset: v1
+      weight: 100
+    mirror:
+      host: model-service-serv
+      subset: test

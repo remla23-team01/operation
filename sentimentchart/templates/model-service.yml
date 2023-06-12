@@ -36,6 +36,30 @@ spec:
           ports:
             - containerPort: 8080
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-service-depl-test
+  labels: { app: model-service, version: test }
+spec:
+  replicas: {{.Values.modelService.replicas}}
+  selector:
+    matchLabels: { app: model-service, version: test }
+  template:
+    metadata:
+      labels: { app: model-service, version: test }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+        - name: model-service
+          # This is the white version of the app
+          image: ghcr.io/remla23-team01/model-service:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
 apiVersion: v1
 kind: Service
 metadata:
