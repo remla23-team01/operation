@@ -10,10 +10,6 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /predict
-        - uri:
-            prefix: /metrics
-        - uri:
             prefix: /
       route:
         - destination:
