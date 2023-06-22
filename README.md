@@ -1,41 +1,55 @@
 # Opperation repo for the Remla project
-Here you can find the files for starting the project using helm and kubernetes. It is also possible to use docker-compose using the docker-compose.yml
+Here you can find the files for starting the project using helm, istio and kubernetes.
+
+## Required setup
+
+To start the application you will need a couple things to be running/installed. It is assumed these steps have been executed. If this is not the case you can look at their specific documentation on how to execute them.
+You will need the following:
+- A running [minikube](https://minikube.sigs.k8s.io/docs/start/) cluster with ingress addon enabled
+- Have `minikube tunnel` running
+- [Helm](https://helm.sh/docs/intro/install/) installed
+- [Istio](https://istio.io/latest/docs/setup/install/) installed
 
 
-## Using k8s
-First start a kubernetes cluster using `minikube start` and start up prometheus if this is not running already.
-To create a tunnel we first have to enable the ingress addon using the following command:
-```
-minikube addons enable ingress
-```
-Then run `minikube tunnel`
+## Running the application
 
-### Manual start up using kubectl
-Add all services to the running cluster by using the command:
-```
-kubectl apply -f .\operations.yml
-```
-This also automaticly exposes the grafana dashboard at http://grafana.localhost
-To view the prometheus page you have to expose the port manualy using the following command:
-```
-minikube service myprom-kube-prometheus-sta-prometheus --url
-```
-You should be able to acces the webservice at http://localhost and the grafana dashboard at http://grafana.localhost
-
-A template grafana dashboard can be imported with the json file: `/grafana/RestaurantSentiment.json`. 
-
-### Start up using helm
-You can then install the helm chart using:
+### Installing with helm
+The easiest way of installing the application is using helm and the GHCR. By running the following command, helm will install the chart in your cluster with the name sentiment.
 ```
 helm install sentiment oci://ghcr.io/remla23-team01/operation/charts/sentimentchart
 ```
-You should be able to acces the webservice at http://localhost and the grafana dashboard at http://grafana.localhost
+
+If you have cloned the repository you can also install the chart using the following command.
+```
+helm install sentiment .\sentimentchart
+```
 
 
-## Start up using docker compose
+### Adding rate limiter
+Unfortunatly this does not yet install the rate limiter to limit traffic to the model service. To add this to the cluster run:
+```
+kubectl apply -f .\envoy.yml
+```
 
-Using docker compose the backend and frontend of the application are pulled from the docker registry and runs them.
+### Using the application
+You should now be able to visit the following urls:
+- http://localhost
+  - Here you can submit reviews to be classified and you will be asked if the prediction was correct
+- http://localhost/admin
+  - A dashboard for an admin to view all reviews and make changes to user feedback
+- http://localhost/metrics
+  - The url that prometheus scrapes for the metrics
 
-To run the application use `docker-compose up -d`
 
-You can then classify restaurant reviews at http://localhost:8081
+### Running Istio Dashboads
+To have a look at the metrics collected by prometheus and the graphs in the grafana dashboard we first have to create the url.
+```
+istioctl dashboard grafana
+```
+Now by going to http://localhost:3000 you should be able to see the "Restaurant Sentiment" dashboard. If it is not there you can import the graph from the grafana folder.
+
+Sometimes the graphs seem to not show any information. To fix this you have to press edit.
+![Grafana dashboard bug fix](images/dashboard-bug-fix-1.png)
+
+And click on the Run queries button. Now the metrics should show up.
+![Grafana dashboard bug fix](images/dashboard-bug-fix-2.png)
