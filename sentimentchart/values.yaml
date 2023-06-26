@@ -1,10 +1,6 @@
 modelService:
   version: latest
-  port: "8080"
   replicas: 1
-  link: "http://localhost"
 app:
   version: latest
   replicas: 1
-configMap:
-  name: config

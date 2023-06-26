@@ -21,7 +21,7 @@ spec:
       containers:
         - name: model-service
           # This is the white version of the app
-          image: ghcr.io/remla23-team01/model-service:0.1.0
+          image: ghcr.io/remla23-team01/model-service:{{.Values.modelService.version}}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -16,6 +16,11 @@ jobs:
       - name: Registry Login (ghcr.io)
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
+      - name: helm linting
+        run: |
+          helm lint sentimentchart
+          helm lint sentimentchart --values sentimentchart/values.yaml
+        
       - name: Pushing Helm Chart
         run: |
           REPO=oci://ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/charts
