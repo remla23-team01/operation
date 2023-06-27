@@ -9,7 +9,8 @@ You will need the following:
 - Have `minikube tunnel` running
 - [Helm](https://helm.sh/docs/intro/install/) installed
 - [Istio](https://istio.io/latest/docs/setup/install/) installed
-    - make sure you have enabled istio injection by running: `kubectl label ns default istio-injection=enabled`
+    - Make sure you have enabled istio injection by running: `kubectl label ns default istio-injection=enabled`
+    - Also make sure you have enabled the grafana and kiali dashboards that come with an istio installation. An example can be found [here](https://istio.io/latest/docs/setup/getting-started/#dashboard)
 
 
 ## Running the application
