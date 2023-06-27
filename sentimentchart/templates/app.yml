@@ -10,14 +10,11 @@ spec:
   template:
     metadata:
       labels: { app: app, version: v1 }
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "80"
     spec:
       containers:
         - name: app
           # This is the white version of the app
-          image: ghcr.io/remla23-team01/app:0.0.26
+          image: ghcr.io/remla23-team01/app:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -34,13 +31,10 @@ spec:
   template:
     metadata:
       labels: { app: app, version: v2 }
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "80"
     spec:
       containers:
         - name: app
-          image: ghcr.io/remla23-team01/app:{{.Values.app.version}}
+          image: ghcr.io/remla23-team01/app:1.1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
