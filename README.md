@@ -9,6 +9,7 @@ You will need the following:
 - Have `minikube tunnel` running
 - [Helm](https://helm.sh/docs/intro/install/) installed
 - [Istio](https://istio.io/latest/docs/setup/install/) installed
+    - make sure you have enabled istio injection by running: `kubectl label ns default istio-injection=enabled`
 
 
 ## Running the application
@@ -53,3 +54,11 @@ Sometimes the graphs seem to not show any information. To fix this you have to p
 
 And click on the Run queries button. Now the metrics should show up.
 ![Grafana dashboard bug fix](images/dashboard-bug-fix-2.png)
+
+To start the kiali dashboard and view how the different parts are connected run:
+```
+istioctl dashboard kiali
+```
+you can now visit http://localhost:20001/kiali
+
+
