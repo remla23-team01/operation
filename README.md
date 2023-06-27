@@ -9,6 +9,7 @@ You will need the following:
 - Have `minikube tunnel` running
 - [Helm](https://helm.sh/docs/intro/install/) installed
 - [Istio](https://istio.io/latest/docs/setup/install/) installed
+    - make sure you have enabled istio injection by running: `kubectl label ns default istio-injection=enabled`
 
 
 ## Running the application
